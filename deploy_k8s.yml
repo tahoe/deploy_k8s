@@ -1,0 +1,48 @@
+---
+- name: manage K8s
+  hosts: k8s
+  strategy: free
+  become: true
+
+  tasks:
+    - name: Install required packages
+      apt:
+        pkg:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gpg
+        state: latest
+
+    - name: Use the k8s apt key
+      get_url:
+        url: "https://pkgs.k8s.io/core:/stable:/v{{ k8s_version }}/deb/Release.key"
+        dest: /etc/apt/keyrings/kubernetes-apt-keyring.asc
+        mode: "0644"
+
+    - name: Install k8s apt sources
+      apt_repository:
+        repo: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.asc] https://pkgs.k8s.io/core:/stable:/v{{ k8s_version }}/deb/ /"
+        state: present
+
+    - name: Install main packages
+      apt:
+        pkg: "{{ item }}"
+      loop:
+        - kubelet
+        - kubeadm
+        - kubectl
+
+    - name: Hold kubeadm
+      dpkg_selections:
+        name: "{{ item }}"
+        selection: hold
+      loop:
+        - kubelet
+        - kubeadm
+        - kubectl
+
+    - name: Enable kubelet
+      systemd_service:
+        name: kubelet
+        state: stopped
