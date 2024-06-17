@@ -16,13 +16,13 @@
 
     - name: Use the k8s apt key
       get_url:
-        url: "https://pkgs.k8s.io/core:/stable:/v{{ k8s_version }}/deb/Release.key"
+        url: "https://pkgs.k8s.io/core:/stable:/v{{ k8sVersion }}/deb/Release.key"
         dest: /etc/apt/keyrings/kubernetes-apt-keyring.asc
         mode: "0644"
 
     - name: Install k8s apt sources
       apt_repository:
-        repo: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.asc] https://pkgs.k8s.io/core:/stable:/v{{ k8s_version }}/deb/ /"
+        repo: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.asc] https://pkgs.k8s.io/core:/stable:/v{{ k8sVersion }}/deb/ /"
         state: present
 
     - name: Install main packages
