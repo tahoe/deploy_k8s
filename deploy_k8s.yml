@@ -5,45 +5,55 @@
   become: true
 
   tasks:
-    - name: Install required packages
-      apt:
-        pkg:
-          - apt-transport-https
-          - ca-certificates
-          - curl
-          - gpg
-        state: latest
+    - name: Set up ssh config on each host
+      copy:
+        src: "{{ item }}"
+        dest: /home/dennis/.ssh/
+        owner: dennis
+        mode: "0600"
+      with_fileglob:
+        "files/ssh/*"
 
-    - name: Use the k8s apt key
-      get_url:
-        url: "https://pkgs.k8s.io/core:/stable:/v{{ k8sVersion }}/deb/Release.key"
-        dest: /etc/apt/keyrings/kubernetes-apt-keyring.asc
-        mode: "0644"
+    # - name: Install required packages
+    #   apt:
+    #     pkg:
+    #       - apt-transport-https
+    #       - ca-certificates
+    #       - curl
+    #       - gpg
+    #     state: latest
 
-    - name: Install k8s apt sources
-      apt_repository:
-        repo: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.asc] https://pkgs.k8s.io/core:/stable:/v{{ k8sVersion }}/deb/ /"
-        state: present
+    # - name: Use the k8s apt key
+    #   get_url:
+    #     url: "https://pkgs.k8s.io/core:/stable:/v{{ k8sVersion }}/deb/Release.key"
+    #     dest: /etc/apt/keyrings/kubernetes-apt-keyring.asc
+    #     mode: "0644"
 
-    - name: Install main packages
-      apt:
-        pkg: "{{ item }}"
-      loop:
-        - kubelet
-        - kubeadm
-        - kubectl
-        - containerd
+    # - name: Install k8s apt sources
+    #   apt_repository:
+    #     repo: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.asc] https://pkgs.k8s.io/core:/stable:/v{{ k8sVersion }}/deb/ /"
+    #     state: present
 
-    - name: Hold kubeadm
-      dpkg_selections:
-        name: "{{ item }}"
-        selection: hold
-      loop:
-        - kubelet
-        - kubeadm
-        - kubectl
+    # - name: Install main packages
+    #   apt:
+    #     pkg: "{{ item }}"
+    #   loop:
+    #     - kubelet
+    #     - kubeadm
+    #     - kubectl
+    #     - containerd
 
-    - name: Enable kubelet
-      systemd_service:
-        name: kubelet
-        state: stopped
+    # - name: Hold kubeadm
+    #   dpkg_selections:
+    #     name: "{{ item }}"
+    #     selection: hold
+    #   loop:
+    #     - kubelet
+    #     - kubeadm
+    #     - kubectl
+
+    # - name: Enable kubelet
+    #   systemd_service:
+    #     name: kubelet
+    #     state: stopped
+
