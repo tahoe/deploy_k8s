@@ -1,0 +1,11 @@
+---
+- name: Set up ssh config on each host
+  copy:
+    src: "{{ item }}"
+    dest: /home/dennis/.ssh/
+    owner: dennis
+    mode: "0600"
+  with_fileglob:
+    "files/ssh/*"
+
+

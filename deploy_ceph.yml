@@ -1,27 +1,15 @@
 ---
 - name: manage Ceph
-  hosts: k8s
+  hosts: all
   # strategy: free
   become: true
 
   tasks:
     - name: Set up ssh config on each host
-      copy:
-        src: "{{ item }}"
-        dest: /home/dennis/.ssh/
-        owner: dennis
-        mode: "0600"
-      with_fileglob:
-        "files/ssh/*"
+      include_tasks: ssh.yml
 
-    - name: Install required packages
-      apt:
-        pkg:
-          - apt-transport-https
-          - ca-certificates
-          - curl
-          - gpg
-        state: latest
+    - name: install dependencies
+      include_tasks: pkgs.yml
 
     - name: Use the k8s apt key
       get_url:
