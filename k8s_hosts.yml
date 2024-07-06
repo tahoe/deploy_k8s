@@ -1,10 +1,23 @@
 k8s:
   hosts:
-    10.0.0.40:
-    10.0.0.211:
-    10.0.0.179:
-    10.0.0.208:
-    10.0.0.162:
-    10.0.0.197:
+      10.0.0.179:
+      10.0.0.211:
+      10.0.0.40:
+      10.0.0.197:
+      10.0.0.162:
+      10.0.0.208:
   vars:
     k8sVersion: "1.30"
+    untaint: true
+
+# (.venv) dennis@extremity:~/myk8s$ ansible -i k8s_hosts.yml k8s[0] -bm shell -a "microceph cluster add node-2" 10.0.0.40 | CHANGED | rc=0 >>
+# eyJuYW1lIjoibm9kZS0yIiwic2VjcmV0IjoiNzg5ODU5YTY5OGI0OWNhNDZiODc3OTNlZjVkYWMzZDQyYjExNzAzMDU1N2MwODdkZGVjOTRkMjYzNWM1NTVjYyIsImZpbmdlcnByaW50IjoiZjgzMjE1OWEwOTZlZmZhMTk4ZWE3Yzk5ZTkzODM1NTY0MTgzZGYyMzMyMTk4MGRkMzVkMDY0MmZhZWUzMTI5ZiIsImpvaW5fYWRkcmVzc2VzIjpbIjEwLjAuMC40MDo3NDQzIl19
+# (.venv) dennis@extremity:~/myk8s$ ansible -i k8s_hosts.yml k8s[0] -bm shell -a "microceph cluster add node-3" 10.0.0.40 | CHANGED | rc=0 >>
+# eyJuYW1lIjoibm9kZS0zIiwic2VjcmV0IjoiMWI0OTc2YWMyM2MwOTc3Mjg1NGQ1ZTExMmZmYWQ1OTM5Mjk4MWNiYzNhYzc4NjQ2MDE3N2RjOTE1ZmI0MmZmZiIsImZpbmdlcnByaW50IjoiZjgzMjE1OWEwOTZlZmZhMTk4ZWE3Yzk5ZTkzODM1NTY0MTgzZGYyMzMyMTk4MGRkMzVkMDY0MmZhZWUzMTI5ZiIsImpvaW5fYWRkcmVzc2VzIjpbIjEwLjAuMC40MDo3NDQzIl19
+# (.venv) dennis@extremity:~/myk8s$ ansible -i k8s_hosts.yml k8s[0] -bm shell -a "microceph cluster add node-4" # 10.0.0.40 | CHANGED | rc=0 >>
+# eyJuYW1lIjoibm9kZS00Iiwic2VjcmV0IjoiMmJkYWM4OTc1M2I5MTcyZjI0ZTNhYzhhNGRiNDVhMTU4YTBhNjZkYTFkMTJjODkxYTIxN2JlMTNmNjgzODE0ZSIsImZpbmdlcnByaW50IjoiZjgzMjE1OWEwOTZlZmZhMTk4ZWE3Yzk5ZTkzODM1NTY0MTgzZGYyMzMyMTk4MGRkMzVkMDY0MmZhZWUzMTI5ZiIsImpvaW5fYWRkcmVzc2VzIjpbIjEwLjAuMC40MDo3NDQzIiwiMTAuMC4wLjE3OTo3NDQzIiwiMTAuMC4wLjIxMTo3NDQzIl19
+# (.venv) dennis@extremity:~/myk8s$ ansible -i k8s_hosts.yml k8s[0] -bm shell -a "microceph cluster add node-5" # 10.0.0.40 | CHANGED | rc=0 >>
+# eyJuYW1lIjoibm9kZS01Iiwic2VjcmV0IjoiM2I5YzcyYzE3YWUwYTE2YmVmMTMwNTU3NDExZTEzM2RiMzM3YjY0YmIzNTliNWFmZTU4YmE3ZDRmMmM2ZWI5MiIsImZpbmdlcnByaW50IjoiZjgzMjE1OWEwOTZlZmZhMTk4ZWE3Yzk5ZTkzODM1NTY0MTgzZGYyMzMyMTk4MGRkMzVkMDY0MmZhZWUzMTI5ZiIsImpvaW5fYWRkcmVzc2VzIjpbIjEwLjAuMC4yMTE6NzQ0MyIsIjEwLjAuMC40MDo3NDQzIiwiMTAuMC4wLjE3OTo3NDQzIl19
+# (.venv) dennis@extremity:~/myk8s$ ansible -i k8s_hosts.yml k8s[0] -bm shell -a "microceph cluster add node-6" # 10.0.0.40 | CHANGED | rc=0 >>
+# eyJuYW1lIjoibm9kZS02Iiwic2VjcmV0IjoiMDdkY2QzMGYzNTFlNWYwNDgxZDBhN2Y4YmJhZjk3MDM3ZGU0ODU4Y2UwYjEyMDM5MTJiZWI0ZGIzMjkxNTBhYyIsImZpbmdlcnByaW50IjoiZjgzMjE1OWEwOTZlZmZhMTk4ZWE3Yzk5ZTkzODM1NTY0MTgzZGYyMzMyMTk4MGRkMzVkMDY0MmZhZWUzMTI5ZiIsImpvaW5fYWRkcmVzc2VzIjpbIjEwLjAuMC40MDo3NDQzIiwiMTAuMC4wLjE3OTo3NDQzIiwiMTAuMC4wLjIxMTo3NDQzIl19
+
